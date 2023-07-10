@@ -7,7 +7,9 @@ Zühlke's Client Technology Days 2023 by DX.
 
 ## Demo ToDo Angular Application
 
-[todo](./todo)
+Demo: [https://tomrrows-css.netlify.app/](https://tomrrows-css.netlify.app/)
+
+Code: [todo](./todo)
 
 ## Slides:
 
