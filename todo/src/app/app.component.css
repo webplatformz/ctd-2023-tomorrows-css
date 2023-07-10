@@ -1,0 +1,52 @@
+nav {
+  width: 100%;
+  background-color: var(--light-purple);
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  /* this ensures, the header is not animated like everything else on the page */
+  view-transition-name: nav-header;
+}
+
+
+nav a {
+  color: black;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0.1rem;
+  transition: color 0.15s ease-in;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+nav a img {
+  height: 2rem;
+  width: auto;
+  transition: filter 0.15s ease-in;
+
+  view-transition-name: nav-header-title;
+}
+
+nav a:hover {
+  color: #4e0872;
+}
+
+nav a:hover img {
+  filter: invert(7%) sepia(97%) saturate(4744%) hue-rotate(279deg) brightness(86%) contrast(103%);
+}
+
+.d-none {
+  display: none;
+}
+
+main {
+  margin: 1rem;
+}

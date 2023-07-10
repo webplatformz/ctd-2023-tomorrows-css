@@ -1,0 +1,71 @@
+form {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-auto-rows: 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+form button[type=submit] {
+  grid-column: span 2;
+}
+
+button.fab {
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 6px 0 black;
+
+  position: fixed;
+  bottom: 1.4rem;
+  right: 1.4rem;
+
+  /* this ensures, the FAB is not animated like everything else on the page */
+  view-transition-name: new-todo-fab;
+}
+
+button.fab img {
+  height: 1.4rem;
+  width: 1.4rem;
+  filter: invert(100%) sepia(18%) saturate(2%) hue-rotate(269deg) brightness(106%) contrast(101%);
+}
+
+#new-todo-form {
+  border: none;
+  border-radius: 4px;
+  padding: 1.4rem;
+}
+
+#new-todo-form button.close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  background: transparent;
+  box-shadow: none;
+  padding: 0.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#new-todo-form button.close img {
+  width: 1rem;
+  height: 1rem;
+  transition: scale 0.1s ease-in;
+}
+
+#new-todo-form button.close:hover img, #new-todo-form button.close:focus img {
+  scale: 1.4;
+}
+
+#new-todo-form h2 {
+  margin-top: 0;
+}
+
+#new-todo-form::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,29 @@
+<a (click)="navigateToDetailPage($event)" *ngIf="todo" [class.done]="todo.done" class="card">
+  <div class="image">
+    <img [alt]="todo.title" [attr.data-id]="todo.id" [src]="todo.imageUrl">
+  </div>
+  <div [class.done]="todo.done" class="details">
+    <div class="title">{{ todo.title }}</div>
+    <div class="description">{{ todo.description }}&nbsp;</div>
+    <div class="due date">
+      {{ todo.dueUntil && 'Due:' }}&nbsp; <span>{{ todo.dueUntil | date: 'medium' }}</span>
+    </div>
+    <div class="created date">Created: <span>{{ todo.createdAt | date: 'medium' }}</span></div>
+    <div class="modified date">
+      {{ todo.modifiedAt && 'Modified:' }}&nbsp; <span>{{ todo.modifiedAt | date: 'medium' }}</span>
+    </div>
+  </div>
+  <div class="actions">
+    <button (click)="toggleDoneState($event)" *ngIf="!todo.done" class="mark">
+      <span>Mark as Done</span>
+      <img alt="Done" src="assets/icons/check.svg">
+    </button>
+    <button (click)="toggleDoneState($event)" *ngIf="todo.done" class="mark">
+      <span>Mark as Due</span>
+      <img alt="Due" src="assets/icons/asterisk.svg">
+    </button>
+    <button (click)="deleteTodo($event)" title="Delete">
+      <img alt="Trash can" src="assets/icons/trash.svg">
+    </button>
+  </div>
+</a>

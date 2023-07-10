@@ -1,0 +1,30 @@
+<button class="fab" popovertarget="new-todo-form">
+  <img alt="add" src="assets/icons/plus.svg">
+</button>
+
+<dialog id="new-todo-form" popover>
+  <button #closeButton class="close" popovertarget="new-todo-form" popovertargetaction="hide">
+    <img alt="close" src="assets/icons/xmark.svg">
+  </button>
+  <h2>Enter new ToDo</h2>
+  <form (ngSubmit)="createNewTodo()" [formGroup]="form">
+    <label for="new-todo-title">
+      Title:
+    </label>
+    <input formControlName="title" id="new-todo-title" type="text">
+
+    <label for="new-todo-description">
+      Description:
+    </label>
+    <input formControlName="description" id="new-todo-description" type="text">
+
+    <label for="new-todo-due">
+      Due date:
+    </label>
+    <input formControlName="dueUntil" id="new-todo-due" type="datetime-local">
+
+    <button [disabled]="form.invalid" type="submit">
+      Create
+    </button>
+  </form>
+</dialog>

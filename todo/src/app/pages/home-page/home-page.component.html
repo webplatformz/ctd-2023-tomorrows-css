@@ -1,0 +1,19 @@
+<div class="container">
+  <section *ngIf="openTodos$ | async as todos">
+    <h2 *ngIf="todos.length > 0" class="due-title">Open ToDos:</h2>
+    <ul *ngIf="todos.length > 0">
+      <li *ngFor="let todo of todos.sort(sortByDue)" [class.has-due]="todo.dueUntil">
+        <app-card [todo]="todo"></app-card>
+      </li>
+    </ul>
+  </section>
+
+  <section *ngIf="closedTodos$ | async as todos">
+    <h2 *ngIf="todos.length > 0" class="done-title">Done ToDos:</h2>
+    <ul *ngIf="todos.length > 0">
+      <li *ngFor="let todo of todos">
+        <app-card [todo]="todo"></app-card>
+      </li>
+    </ul>
+  </section>
+</div>

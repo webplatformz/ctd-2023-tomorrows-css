@@ -1,0 +1,10 @@
+<nav>
+  <a (click)="navigateToHomePage()">
+    <img [class.d-none]="isHomePage" alt="back arrow" src="assets/icons/arrow-left.svg">
+    <span>ToDo</span>
+  </a>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+  <app-new-todo-form></app-new-todo-form>
+</main>

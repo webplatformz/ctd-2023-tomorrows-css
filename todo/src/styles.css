@@ -1,0 +1,124 @@
+:root {
+  --background-color: #fafafa;
+  --light-purple: #ae7eae;
+  --purple: #965b9a;
+  --dark-purple: #834f87;
+  --gray: #4f4f4f;
+  --dark-gray: #454545;
+
+  --color-on-active: var(--purple);
+  --color-on-hover: var(--dark-purple);
+}
+
+html, body {
+  box-sizing: border-box;
+  font-family: "AA Zuehlke", Arial, sans-serif;
+  margin: 0;
+
+  background-color: var(--background-color);
+  accent-color: var(--color-on-active);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  color: white;
+  background-color: var(--purple);
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  transition: box-shadow 0.1s ease-in, background-color 0.1s ease-in;
+}
+
+button:hover:not(:disabled), button:focus:not(:disabled) {
+  background-color: var(--light-purple);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .14), 0 4px 5px 0 rgba(0, 0, 0, .12), 0 1px 10px 0 rgba(0, 0, 0, .2);
+}
+
+button:disabled {
+  color: #c7bfbf;
+  background-color: #888189;
+  cursor: no-drop;
+}
+
+a {
+  cursor: pointer;
+}
+
+input {
+  padding: 0.6rem;
+}
+
+/* =============== MAIN ANIMATION - OPACITY BY DEFAULT =============== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.6s;
+}
+
+/* =============== TODO PAGE INFO ANIMATION =============== */
+@keyframes slide-from-bottom {
+  from {
+    opacity: 0;
+    translate: 0 80dvh;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-to-bottom {
+  50% {
+    opacity: 0;
+  }
+
+  to {
+    translate: 0 80dvh;
+  }
+}
+
+::view-transition-old(todo-infos) {
+  animation: 0.3s both slide-to-bottom ease;
+}
+
+::view-transition-new(todo-infos) {
+  animation: 0.3s both slide-from-bottom ease;
+}
+
+/* =============== HEADER ARROW ANIMATION =============== */
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    translate: -20dvw 0;
+  }
+}
+
+@keyframes slide-to-left {
+  to {
+    opacity: 0;
+    translate: -20dvw 0;
+  }
+}
+
+::view-transition-old(nav-header-title) {
+  animation: 0.2s both slide-to-left ease;
+}
+
+::view-transition-new(nav-header-title) {
+  animation: 0.2s both slide-from-left ease;
+}
+
+/**/
+::view-transition-old(todo-image),
+::view-transition-new(todo-image) {
+  /*animation: none;*/
+  mix-blend-mode: normal;
+  height: 100%;
+  overflow: clip;
+}
+
+.todo-image {
+  view-transition-name: todo-image;
+}

@@ -1,0 +1,37 @@
+<div *ngIf="todo" class="container">
+  <img [alt]="todo.title" [src]="todo.imageUrl" class="banner-image">
+  <section class="infos">
+    <div class="details">
+      <h1 class="title">{{ todo.title }}</h1>
+      <div class="description">{{ todo.description }}&nbsp;</div>
+      <div class="due date">
+        {{ todo.dueUntil && 'Due:' }}&nbsp; <span>{{ todo.dueUntil | date: 'medium' }}</span>
+      </div>
+      <div class="created date">Created: <span>{{ todo.createdAt | date: 'medium' }}</span></div>
+      <div class="modified date">
+        {{ todo.modifiedAt && 'Modified:' }}&nbsp; <span>{{ todo.modifiedAt | date: 'medium' }}</span>
+      </div>
+    </div>
+    <div class="actions">
+      <button (click)="toggleDoneState()" *ngIf="!todo.done" class="done">
+        Mark as Done
+        <img alt="Done" src="assets/icons/check.svg">
+      </button>
+      <button (click)="toggleDoneState()" *ngIf="todo.done" class="done">
+        Mark as Due
+        <img alt="Due" src="assets/icons/asterisk.svg">
+      </button>
+      <button (click)="deleteTodo()" title="Delete">
+        <img alt="Trash can" src="assets/icons/trash.svg">
+      </button>
+    </div>
+  </section>
+</div>
+
+<section *ngIf="!todo">
+  <p>No Todo found to given Id.</p>
+  <a (click)="navigateToMainPage()">
+    <img alt="navigate back arrow" src="assets/icons/arrow-left.svg">
+    Back to overview page
+  </a>
+</section>
