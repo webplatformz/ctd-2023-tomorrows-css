@@ -17,14 +17,15 @@ export class HomePageComponent {
   }
 
   sortByDue(a: Todo, b: Todo): 0 | 1 | -1 {
+    const openTodosAtBeginning: boolean = true;
     if (a.dueUntil && b.dueUntil) {
       return a.dueUntil > b.dueUntil ? 1 : -1;
     }
     if (a.dueUntil) {
-      return -1;
+      return openTodosAtBeginning ? -1 : 1;
     }
     if (b.dueUntil) {
-      return 1;
+      return openTodosAtBeginning ? 1 : -1;
     }
     return 0;
   }
