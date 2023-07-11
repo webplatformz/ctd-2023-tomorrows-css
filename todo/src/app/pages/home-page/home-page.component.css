@@ -85,6 +85,6 @@ ul {
   }
 }
 
-li:nth-child(2 of .has-due) {
+li:nth-child(1 of .has-due) {
   animation: pulse-shadow 5s infinite;
 }
