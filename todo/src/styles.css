@@ -53,10 +53,29 @@ input {
 }
 
 /* =============== MAIN ANIMATION - OPACITY BY DEFAULT =============== */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.6s;
+
+@keyframes slide-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(75dvw);
+  }
 }
+
+@keyframes slide-to-left {
+  to {
+    opacity: 0;
+    transform: translateX(-75dvw);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 0.4s both slide-to-left ease;
+}
+
+::view-transition-new(root) {
+  animation: 0.4s both slide-from-right ease;
+}
+
 
 /* =============== TODO PAGE INFO ANIMATION =============== */
 @keyframes slide-from-bottom {
