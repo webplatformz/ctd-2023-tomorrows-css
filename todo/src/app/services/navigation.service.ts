@@ -1,6 +1,7 @@
 import {Injectable, NgZone} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavigationOptions} from "../models/navigation-options.model";
+import {ScrollPosition} from "../models/scroll-position.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,11 @@ export class NavigationService {
         return;
       }
 
-      const currentScroll = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
-      currentScroll[this.router.url] = {
-        top: document.documentElement.scrollTop,
-        left: document.documentElement.scrollLeft,
-      };
-      sessionStorage.setItem('scroll', JSON.stringify(currentScroll));
-
       if (url === '/') {
         document.documentElement.classList.add('back-navigation');
       }
 
+      this.saveScrollPosition(this.router.url);
 
       if (options) {
         document.querySelector(options.queryBefore)?.classList.add('embed-transition');
@@ -42,12 +37,7 @@ export class NavigationService {
           if (options) {
             document.querySelector(options.queryAfter)?.classList.add('embed-transition');
           }
-          const scrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
-          if (scrollPosition[url]) {
-            document.documentElement.scroll({top: scrollPosition[url].top, left: scrollPosition[url].left});
-            delete scrollPosition[url];
-            sessionStorage.setItem('scroll', JSON.stringify(scrollPosition));
-          }
+          this.applyScrollPosition(url);
         });
 
         try {
@@ -59,6 +49,25 @@ export class NavigationService {
           }
         }
       });
+    }
+  }
+
+  private saveScrollPosition(url: string): void {
+    const currentScroll: ScrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
+    currentScroll[url] = {
+      top: document.documentElement.scrollTop,
+      left: document.documentElement.scrollLeft,
+    };
+    sessionStorage.setItem('scroll', JSON.stringify(currentScroll));
+  }
+
+  private applyScrollPosition(url: string): void {
+    const scrollPosition: ScrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
+    if (scrollPosition[url]) {
+      const {top, left} = scrollPosition[url];
+      document.documentElement.scroll({top, left});
+      delete scrollPosition[url];
+      sessionStorage.setItem('scroll', JSON.stringify(scrollPosition));
     }
   }
 }
