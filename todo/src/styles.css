@@ -52,92 +52,80 @@ input {
   padding: 0.6rem;
 }
 
-/* =============== MAIN ANIMATION - OPACITY BY DEFAULT =============== */
+.embed-transition {
+  view-transition-name: embed-transition;
+}
 
-@keyframes slide-from-right {
-  from {
+@keyframes slide-to-right {
+  to {
+    translate: 100dvw 0;
     opacity: 0;
-    transform: translateX(75dvw);
   }
 }
 
 @keyframes slide-to-left {
   to {
+    translate: -100dvw 0;
     opacity: 0;
-    transform: translateX(-75dvw);
   }
 }
 
-::view-transition-old(root) {
-  animation: 0.4s both slide-to-left ease;
+@keyframes slide-from-right {
+  from {
+    translate: 100dvw 0;
+    opacity: 0;
+  }
 }
 
-::view-transition-new(root) {
-  animation: 0.4s both slide-from-right ease;
+@keyframes slide-from-left {
+  from {
+    translate: -100dvw 0;
+    opacity: 0;
+  }
 }
 
-
-/* =============== TODO PAGE INFO ANIMATION =============== */
 @keyframes slide-from-bottom {
   from {
+    translate: 0 100dvh;
     opacity: 0;
-    translate: 0 80dvh;
-  }
-  30% {
-    opacity: 1;
   }
 }
 
 @keyframes slide-to-bottom {
-  50% {
-    opacity: 0;
-  }
-
   to {
-    translate: 0 80dvh;
-  }
-}
-
-::view-transition-old(todo-infos) {
-  animation: 0.3s both slide-to-bottom ease;
-}
-
-::view-transition-new(todo-infos) {
-  animation: 0.3s both slide-from-bottom ease;
-}
-
-/* =============== HEADER ARROW ANIMATION =============== */
-@keyframes slide-from-left {
-  from {
+    translate: 0 100dvh;
     opacity: 0;
-    translate: -20dvw 0;
   }
 }
 
-@keyframes slide-to-left {
-  to {
-    opacity: 0;
-    translate: -20dvw 0;
-  }
+::view-transition-old(root) {
+  animation: slide-to-left 0.2s both;
 }
 
-::view-transition-old(nav-header-title) {
-  animation: 0.2s both slide-to-left ease;
+::view-transition-new(root) {
+  animation: slide-from-right 0.2s both;
 }
 
-::view-transition-new(nav-header-title) {
-  animation: 0.2s both slide-from-left ease;
+.back-navigation::view-transition-old(root) {
+  animation: slide-to-right 0.2s both;
 }
 
-/**/
-::view-transition-old(todo-image),
-::view-transition-new(todo-image) {
-  /*animation: none;*/
+.back-navigation::view-transition-new(root) {
+  animation: slide-from-left 0.2s both;
+}
+
+::view-transition-old(embed-transition),
+::view-transition-new(embed-transition) {
+  animation: none;
   mix-blend-mode: normal;
   height: 100%;
   overflow: clip;
 }
 
-.todo-image {
-  view-transition-name: todo-image;
+::view-transition-old(todo-info-block) {
+  animation: slide-to-bottom 0.3s both;
+}
+
+::view-transition-new(todo-info-block) {
+  animation: slide-from-bottom 0.3s both;
 }
