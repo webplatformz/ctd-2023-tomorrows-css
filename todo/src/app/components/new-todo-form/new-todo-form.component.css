@@ -23,8 +23,7 @@ button.fab {
   bottom: 1.4rem;
   right: 1.4rem;
 
-  /* this ensures, the FAB is not animated like everything else on the page */
-  view-transition-name: new-todo-fab;
+  view-transition-name: fab-button;
 }
 
 button.fab img {
