@@ -17,6 +17,13 @@ export class NavigationService {
         return;
       }
 
+      const currentScroll = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
+      currentScroll[this.router.url] = {
+        top: document.documentElement.scrollTop,
+        left: document.documentElement.scrollLeft,
+      };
+      sessionStorage.setItem('scroll', JSON.stringify(currentScroll));
+
       if (url === '/') {
         document.documentElement.classList.add('back-navigation');
       }
@@ -34,6 +41,12 @@ export class NavigationService {
           });
           if (options) {
             document.querySelector(options.queryAfter)?.classList.add('embed-transition');
+          }
+          const scrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
+          if (scrollPosition[url]) {
+            document.documentElement.scroll({top: scrollPosition[url].top, left: scrollPosition[url].left});
+            delete scrollPosition[url];
+            sessionStorage.setItem('scroll', JSON.stringify(scrollPosition));
           }
         });
 
