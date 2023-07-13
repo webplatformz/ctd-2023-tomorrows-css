@@ -34,14 +34,15 @@ export class AppComponent implements OnInit, OnDestroy {
     window.removeEventListener('popstate', () => this.navigateToWindowLocation());
   }
 
-  navigateToHomePage(): void {
+  async navigateToHomePage(): Promise<void> {
     const todoId = window.location.pathname.replace('/todos/', '');
-    const element = document.querySelector(`[data-id="${todoId}"]`);
-    this.navigateService.navigateWithElementAnimation('/', 'img.banner-image', `[data-id="${todoId}"]`, 'todo-image');
-    // this.navigateService.navigateTo('/');
+    await this.navigateService.navigate('/', {
+      queryBefore: '.banner-image',
+      queryAfter: `[data-id="${todoId}"]`,
+    });
   }
 
-  private navigateToWindowLocation(): void {
-    this.navigateService.navigateTo(window.location.pathname);
+  private async navigateToWindowLocation(): Promise<void> {
+    await this.navigateService.navigate(window.location.pathname);
   }
 }

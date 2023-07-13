@@ -8,7 +8,7 @@ import {NavigationService} from "../../services/navigation.service";
 @Component({
   selector: 'app-todo-page',
   templateUrl: './todo-page.component.html',
-  styleUrls: ['./todo-page.component.css']
+  styleUrls: ['./todo-page.component.css'],
 })
 export class TodoPageComponent implements OnDestroy {
   todo: Todo | undefined;
@@ -41,11 +41,11 @@ export class TodoPageComponent implements OnDestroy {
   deleteTodo(): void {
     if (this.todo) {
       this.todoService.remove(this.todo.id);
-      this.navigateToMainPage();
+      void this.navigateToMainPage();
     }
   }
 
-  navigateToMainPage(): void {
-    void this.navigateService.navigateTo('/');
+  async navigateToMainPage(): Promise<void> {
+    await this.navigateService.navigate('/');
   }
 }

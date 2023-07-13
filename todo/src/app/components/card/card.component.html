@@ -1,4 +1,4 @@
-<a (click)="navigateToDetailPage($event)" *ngIf="todo" [class.done]="todo.done" class="card">
+<a (click)="navigateToDetailPage()" *ngIf="todo" [class.done]="todo.done" class="card">
   <div class="image">
     <img [alt]="todo.title" [attr.data-id]="todo.id" [src]="todo.imageUrl">
   </div>

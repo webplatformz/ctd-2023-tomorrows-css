@@ -1,5 +1,6 @@
 import {Injectable, NgZone} from '@angular/core';
 import {Router} from "@angular/router";
+import {NavigationOptions} from "../models/navigation-options.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,44 +10,42 @@ export class NavigationService {
   constructor(private router: Router, private zone: NgZone) {
   }
 
-
-  async navigateWithElementAnimation(url: string, queryBefore: string, queryAfter: string, transitionName: string): Promise<void> {
+  async navigate(url: string, options?: NavigationOptions): Promise<void> {
     if (this.router.url !== url) {
-      // fallback
-      // @ts-ignore
-      if (!document.startViewTransition) {
-        void this.router.navigateByUrl(url);
+      if (Object.hasOwn(document, 'startViewTransition')) {
+        await this.router.navigateByUrl(url);
         return;
       }
 
-      document.querySelector(queryBefore)?.classList.add(transitionName);
+      if (url === '/') {
+        document.documentElement.classList.add('back-navigation');
+      }
 
-      // @ts-ignore
-      const transition = document.startViewTransition(() => {
-        void this.zone.run(() => this.router.navigateByUrl(url));
+
+      if (options) {
+        document.querySelector(options.queryBefore)?.classList.add('embed-transition');
+      }
+
+      await this.zone.runOutsideAngular(async () => {
+        // @ts-ignore
+        const transition = await document.startViewTransition(async () => {
+          await this.zone.run(async () => {
+            await this.router.navigateByUrl(url);
+          });
+          if (options) {
+            document.querySelector(options.queryAfter)?.classList.add('embed-transition');
+          }
+        });
+
+        try {
+          await transition.finished;
+        } finally {
+          document.documentElement.classList.remove('back-navigation');
+          if (options) {
+            document.querySelector(options.queryAfter)?.classList.remove('embed-transition');
+          }
+        }
       });
-
-      transition.ready.finally(() =>
-        document.querySelector(queryAfter)?.classList.add(transitionName)
-      );
-
-      transition.finished.finally(() =>
-        document.querySelector(queryAfter)?.classList.remove(transitionName)
-      );
-    }
-  }
-
-  navigateTo(url: string): void {
-    if (this.router.url !== url) {
-      // @ts-ignore
-      // fallback, if startViewTransition is not supported by browser
-      if (!document.startViewTransition) {
-        void this.router.navigateByUrl(url);
-        return;
-      }
-
-      // @ts-ignore
-      document.startViewTransition(() => this.zone.run(() => this.router.navigateByUrl(url)));
     }
   }
 }

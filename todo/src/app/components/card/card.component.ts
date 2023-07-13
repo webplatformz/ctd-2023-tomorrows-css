@@ -6,7 +6,7 @@ import {NavigationService} from "../../services/navigation.service";
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
 })
 export class CardComponent {
   @Input() todo: Todo | undefined;
@@ -14,20 +14,12 @@ export class CardComponent {
   constructor(private todoService: TodoService, private navigateService: NavigationService) {
   }
 
-  navigateToDetailPage(event: Event): void {
+  async navigateToDetailPage(): Promise<void> {
     const url: string = `/todos/${this.todo?.id}`;
-    const imageElement: HTMLElement | null = (event.currentTarget as HTMLElement).children.item(0) as HTMLElement;
-    if (imageElement) {
-      // @ts-ignore
-      // this.navigateService.navigateWithStayingElement(url, imageElement, 'todo-image');
-      // return;
-    }
-    this.navigateService.navigateWithElementAnimation(
-      url,
-      `[data-id="${this.todo?.id}"]`,
-      'img.banner-image',
-      'todo-image');
-    // this.navigateService.navigateTo(url);
+    await this.navigateService.navigate(url, {
+      queryBefore: `[data-id="${this.todo?.id}"`,
+      queryAfter: '.banner-image',
+    });
   }
 
   toggleDoneState(event: Event): void {
