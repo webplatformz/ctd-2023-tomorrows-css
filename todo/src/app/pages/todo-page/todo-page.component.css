@@ -8,12 +8,11 @@
   object-fit: cover;
   display: block;
   margin-inline: auto;
-  view-transition-name: todo-image;
 }
 
 .infos {
   background-color: var(--background-color);
-  view-transition-name: todo-infos;
+  view-transition-name: todo-info-block;
 }
 
 .details {
