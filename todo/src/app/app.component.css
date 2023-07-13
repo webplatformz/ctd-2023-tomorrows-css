@@ -31,8 +31,6 @@ nav a img {
   height: 2rem;
   width: auto;
   transition: filter 0.15s ease-in;
-
-  view-transition-name: nav-header-title;
 }
 
 nav a:hover {
