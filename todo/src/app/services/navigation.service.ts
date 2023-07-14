@@ -8,6 +8,8 @@ import {ScrollPosition} from "../models/scroll-position.model";
 })
 export class NavigationService {
 
+  private scrollPositions: ScrollPosition = {};
+
   constructor(private router: Router, private zone: NgZone) {
   }
 
@@ -53,21 +55,17 @@ export class NavigationService {
   }
 
   private saveScrollPosition(url: string): void {
-    const currentScroll: ScrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
-    currentScroll[url] = {
+    this.scrollPositions[url] = {
       top: document.documentElement.scrollTop,
       left: document.documentElement.scrollLeft,
     };
-    sessionStorage.setItem('scroll', JSON.stringify(currentScroll));
   }
 
   private applyScrollPosition(url: string): void {
-    const scrollPosition: ScrollPosition = JSON.parse(sessionStorage.getItem('scroll') ?? '{}');
-    if (scrollPosition[url]) {
-      const {top, left} = scrollPosition[url];
+    if (this.scrollPositions[url]) {
+      const {top, left} = this.scrollPositions[url];
       document.documentElement.scroll({top, left});
-      delete scrollPosition[url];
-      sessionStorage.setItem('scroll', JSON.stringify(scrollPosition));
+      delete this.scrollPositions[url];
     }
   }
 }
